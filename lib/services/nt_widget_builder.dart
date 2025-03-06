@@ -44,6 +44,7 @@ import 'package:elastic_dashboard/widgets/nt_widgets/single_topic/text_display.d
 import 'package:elastic_dashboard/widgets/nt_widgets/single_topic/toggle_button.dart';
 import 'package:elastic_dashboard/widgets/nt_widgets/single_topic/toggle_switch.dart';
 import 'package:elastic_dashboard/widgets/nt_widgets/single_topic/voltage_view.dart';
+import 'package:elastic_dashboard/widgets/nt_widgets/single_topic/audio_source.dart';
 
 typedef NTModelJsonProvider = NTWidgetModel Function({
   required Map<String, dynamic> jsonData,
@@ -343,6 +344,13 @@ class NTWidgetBuilder {
         minHeight: _normalSize * 2,
         defaultWidth: 2,
         defaultHeight: 2);
+      
+    register(
+        name: AudioSource.widgetType,
+        model: AudioSourceModel.new,
+        widget: AudioSource.new,
+        fromJson: AudioSourceModel.fromJson,
+        minHeight: _normalSize);
 
     _widgetNameBuildMap.addAll({
       LargeTextDisplay.widgetType: LargeTextDisplay.new,

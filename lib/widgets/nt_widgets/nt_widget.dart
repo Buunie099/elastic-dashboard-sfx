@@ -19,6 +19,7 @@ import 'package:elastic_dashboard/widgets/nt_widgets/single_topic/text_display.d
 import 'package:elastic_dashboard/widgets/nt_widgets/single_topic/toggle_button.dart';
 import 'package:elastic_dashboard/widgets/nt_widgets/single_topic/toggle_switch.dart';
 import 'package:elastic_dashboard/widgets/nt_widgets/single_topic/voltage_view.dart';
+import 'package:elastic_dashboard/widgets/nt_widgets/single_topic/audio_source.dart';
 
 abstract class NTWidgetModel extends ChangeNotifier {
   String get type;
@@ -178,6 +179,7 @@ class SingleTopicNTWidgetModel extends NTWidgetModel {
           ToggleButton.widgetType,
           TextDisplay.widgetType,
           LargeTextDisplay.widgetType,
+          AudioSource.widgetType,
         ];
       case NT4TypeStr.kFloat32:
       case NT4TypeStr.kFloat64:
