@@ -43,7 +43,7 @@ class AudioSourceModel extends SingleTopicNTWidgetModel {
   }
 
   Future<void> playSound() async {
-    String filePath = '${path.dirname(Platform.resolvedExecutable)}/data/flutter_assets/assets/soundeffects/${_soundPath}';
+    String filePath = '${path.dirname(Platform.resolvedExecutable)}/data/flutter_assets/assets/soundeffects/$_soundPath';
     logger.info(filePath);
     await player.play(DeviceFileSource(filePath), volume: 1);
     logger.info('We be here Yo! PART #2, COOKING UP DIS CODE');
