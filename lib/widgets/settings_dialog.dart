@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -526,7 +528,7 @@ class _SettingsDialogState extends State<SettingsDialog> {
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     fontWeight: FontWeight.w500,
                   ),
-              maxLines: 3,
+              maxLines: 4,
             ),
           ),
           const SizedBox(width: 5),
@@ -573,13 +575,14 @@ class _SettingsDialogState extends State<SettingsDialog> {
               },
             ),
           ),
-          TextButton.icon(
-            onPressed: () {
-              widget.onOpenAssetsFolderPressed?.call();
-            },
-            icon: const Icon(Icons.folder_outlined),
-            label: const Text('Open Assets Folder'),
-          ),
+          if (!Platform.isMacOS)
+            TextButton.icon(
+              onPressed: () {
+                widget.onOpenAssetsFolderPressed?.call();
+              },
+              icon: const Icon(Icons.folder_outlined),
+              label: const Text('Open Assets Folder'),
+            ),
         ],
       ),
     ];
