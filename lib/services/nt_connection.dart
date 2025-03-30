@@ -217,12 +217,8 @@ class NTConnection {
     _ntClient.publishTopic(topic);
   }
 
-  NT4Topic publishNewTopic(
-    String name,
-    String type, {
-    Map<String, dynamic> properties = const {},
-  }) {
-    return _ntClient.publishNewTopic(name, type, properties);
+  NT4Topic publishNewTopic(String name, String type) {
+    return _ntClient.publishNewTopic(name, type);
   }
 
   bool isTopicPublished(NT4Topic? topic) {

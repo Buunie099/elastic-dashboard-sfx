@@ -88,6 +88,12 @@ class NTWidgetBuilder {
     logger.info('Configuring NT Widget Builder');
 
     register(
+        name: AudioSource.widgetType,
+        model: AudioSourceModel.new,
+        widget: AudioSource.new,
+        fromJson: AudioSourceModel.fromJson);
+
+    register(
         name: BooleanBox.widgetType,
         model: BooleanBoxModel.new,
         widget: BooleanBox.new,
@@ -344,13 +350,6 @@ class NTWidgetBuilder {
         minHeight: _normalSize * 2,
         defaultWidth: 2,
         defaultHeight: 2);
-      
-    register(
-        name: AudioSource.widgetType,
-        model: AudioSourceModel.new,
-        widget: AudioSource.new,
-        fromJson: AudioSourceModel.fromJson,
-        minHeight: _normalSize);
 
     _widgetNameBuildMap.addAll({
       LargeTextDisplay.widgetType: LargeTextDisplay.new,

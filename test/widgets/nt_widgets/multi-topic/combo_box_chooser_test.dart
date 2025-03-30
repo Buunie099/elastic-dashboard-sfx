@@ -53,7 +53,6 @@ void main() {
       virtualValues: {
         'Test/Combo Box Chooser/options': ['One', 'Two', 'Three'],
         'Test/Combo Box Chooser/active': 'Two',
-        'Test/Combo Box Chooser/selected': null,
       },
     );
   });
@@ -134,9 +133,7 @@ void main() {
     expect(find.text('Two'), findsOneWidget);
     expect(find.text('Three'), findsNothing);
     expect(
-      (comboBoxChooserModel as ComboBoxChooserModel).previousSelected,
-      isNull,
-    );
+        (comboBoxChooserModel as ComboBoxChooserModel).selectedChoice, 'Two');
     expect(find.byIcon(Icons.check), findsOneWidget);
 
     await widgetTester.tap(find.byType(DropdownButton2<String>));
@@ -147,22 +144,19 @@ void main() {
     expect(find.text('Three'), findsOneWidget);
 
     await widgetTester.tap(find.text('One'));
-    comboBoxChooserModel.onChooserStateUpdate();
     await widgetTester.pumpAndSettle();
 
     expect(find.text('One'), findsOneWidget);
     expect(find.text('Two'), findsNothing);
     expect(find.text('Three'), findsNothing);
 
-    expect(comboBoxChooserModel.previousSelected, 'One');
+    expect(comboBoxChooserModel.selectedChoice, 'One');
     expect(find.byIcon(Icons.priority_high), findsOneWidget);
 
     ntConnection.updateDataFromTopicName(
-      comboBoxChooserModel.activeTopicName,
-      'One',
-    );
+        comboBoxChooserModel.activeTopicName, 'One');
 
-    comboBoxChooserModel.onChooserStateUpdate();
+    comboBoxChooserModel.refresh();
     await widgetTester.pumpAndSettle();
 
     expect(find.byIcon(Icons.priority_high), findsNothing);

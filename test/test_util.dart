@@ -125,18 +125,11 @@ MockNTConnection createMockOnlineNT4({
 
   when(mockNT4Connection.getTopicFromName(any)).thenReturn(null);
 
-  when(mockNT4Connection.publishNewTopic(
-    any,
-    any,
-    properties: anyNamed('properties'),
-  )).thenAnswer((invocation) {
+  when(mockNT4Connection.publishNewTopic(any, any)).thenAnswer((invocation) {
     NT4Topic newTopic = NT4Topic(
-      name: invocation.positionalArguments[0],
-      type: invocation.positionalArguments[1],
-      properties: invocation.positionalArguments.length >= 3
-          ? invocation.positionalArguments[2]
-          : {},
-    );
+        name: invocation.positionalArguments[0],
+        type: invocation.positionalArguments[1],
+        properties: {});
 
     virtualTopicsMap[virtualTopicsMap.length] = newTopic;
     publishedTopics.add(newTopic);
