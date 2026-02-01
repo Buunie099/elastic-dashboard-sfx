@@ -1,4 +1,3 @@
-
 import 'dart:async';
 import 'dart:io';
 
@@ -19,15 +18,16 @@ import 'package:elastic_dashboard/services/log.dart';
 
 bool isInitialized = false;
 double soundVolume = 1;
-String filepath = "";
+String filepath = '';
 
 class AudioSourceModel extends SingleTopicNTWidgetModel {
   @override
   String type = AudioSource.widgetType;
+
   final AudioPlayer player = AudioPlayer();
 
   bool _shouldplay = false;
-  String _soundPath = "";
+  String _soundPath = '';
 
   bool get shouldPlay => _shouldplay;
   String get soundPath => _soundPath;
@@ -43,18 +43,22 @@ class AudioSourceModel extends SingleTopicNTWidgetModel {
   }
 
   Future<void> playSound() async {
-    String filePath = '${path.dirname(Platform.resolvedExecutable)}\\data\\flutter_assets\\assets\\soundeffects\\$_soundPath';
+    String filePath =
+        '${path.dirname(Platform.resolvedExecutable)}\\data\\flutter_assets\\assets\\soundeffects\\$_soundPath';
     logger.info(filePath);
     await player.play(DeviceFileSource(filePath), volume: 1);
     logger.info('We be here Yo! PART #2, COOKING UP DIS CODE');
     await player.resume();
-    logger.info('We be here Yo! PART #3, #LEARNTDARTIN6HOURS #FLUTTERIN6HOURS #NEWLANGUAGE');
+    logger.info(
+      'We be here Yo! PART #3, #LEARNTDARTIN6HOURS #FLUTTERIN6HOURS #NEWLANGUAGE',
+    );
   }
 
   AudioSourceModel({
     required super.ntConnection,
     required super.preferences,
     required super.topic,
+    super.ntStructMeta,
     super.dataType,
     super.period,
   }) : super();
@@ -64,7 +68,7 @@ class AudioSourceModel extends SingleTopicNTWidgetModel {
     required super.preferences,
     required Map<String, dynamic> jsonData,
   }) : super.fromJson(jsonData: jsonData) {
-    _soundPath = tryCast(jsonData['sound_path']) ?? "";
+    _soundPath = tryCast(jsonData['sound_path']) ?? '';
 
     if (!isInitialized) {
       player.setReleaseMode(ReleaseMode.stop);
@@ -73,42 +77,38 @@ class AudioSourceModel extends SingleTopicNTWidgetModel {
   }
 
   @override
-  Map<String, dynamic> toJson() {
-    return {
-      ...super.toJson(),
-      'sound_path': _soundPath
-    };
-  }
+  Map<String, dynamic> toJson() => {
+    ...super.toJson(),
+    'sound_path': _soundPath,
+  };
 
   @override
-  List<Widget> getEditProperties(BuildContext context) {
-    return [
-        DialogTextInput(
-          onSubmit: (String path) {
-            soundPath = path;
-            playSound();
-          },
-          label: "File Name",
-          initialText: soundPath,
-        ),
-        const SizedBox(width: 10),
-        Flexible(
-          child: DialogTextInput(
-            onSubmit: (value) {
-              double? newWidth = double.tryParse(value);
+  List<Widget> getEditProperties(BuildContext context) => [
+    DialogTextInput(
+      onSubmit: (String value) {
+        soundPath = value;
+        playSound();
+      },
+      label: 'File Name',
+      initialText: soundPath,
+    ),
+    const SizedBox(width: 10),
+    Flexible(
+      child: DialogTextInput(
+        onSubmit: (String value) {
+          double? newWidth = double.tryParse(value);
 
-              if (newWidth == null) {
-                return;
-              }
-              soundVolume = newWidth;
-            },
-            formatter: TextFormatterBuilder.decimalTextFormatter(),
-            label: 'Volume (0-1)',
-            initialText: soundVolume.toString(),
-          ),
-        ),
-    ];
-  }
+          if (newWidth == null) {
+            return;
+          }
+          soundVolume = newWidth;
+        },
+        formatter: TextFormatterBuilder.decimalTextFormatter(),
+        label: 'Volume (0-1)',
+        initialText: soundVolume.toString(),
+      ),
+    ),
+  ];
 }
 
 class AudioSource extends NTWidget {
@@ -131,12 +131,12 @@ class AudioSource extends NTWidget {
         Widget defaultWidget() => Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15.0),
-            color: (value) ? const Color(0xff505050) : const Color(0xff0000ff)
+            color: (value) ? const Color(0xff505050) : const Color(0xff0000ff),
           ),
         );
 
-      return defaultWidget();
-      }
+        return defaultWidget();
+      },
     );
   }
 }

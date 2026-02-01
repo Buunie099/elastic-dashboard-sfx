@@ -23,6 +23,7 @@ import 'package:elastic_dashboard/widgets/nt_widgets/single_topic/text_display.d
 import 'package:elastic_dashboard/widgets/nt_widgets/single_topic/toggle_button.dart';
 import 'package:elastic_dashboard/widgets/nt_widgets/single_topic/toggle_switch.dart';
 import 'package:elastic_dashboard/widgets/nt_widgets/single_topic/voltage_view.dart';
+import 'package:elastic_dashboard/widgets/nt_widgets/single_topic/audio_source.dart';
 
 sealed class NTWidgetModel extends ChangeNotifier {
   String get type;
@@ -186,6 +187,7 @@ class SingleTopicNTWidgetModel extends NTWidgetModel {
 
     if (ntDataType == NT4DataType.boolean) {
       availableTypes.addAll([
+        AudioSource.widgetType,
         BooleanBox.widgetType,
         ToggleSwitch.widgetType,
         ToggleButton.widgetType,

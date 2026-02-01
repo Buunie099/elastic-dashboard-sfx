@@ -46,6 +46,7 @@ import 'package:elastic_dashboard/widgets/nt_widgets/single_topic/text_display.d
 import 'package:elastic_dashboard/widgets/nt_widgets/single_topic/toggle_button.dart';
 import 'package:elastic_dashboard/widgets/nt_widgets/single_topic/toggle_switch.dart';
 import 'package:elastic_dashboard/widgets/nt_widgets/single_topic/voltage_view.dart';
+import 'package:elastic_dashboard/widgets/nt_widgets/single_topic/audio_source.dart';
 
 typedef NTModelJsonProvider<T extends NTWidgetModel> =
     T Function({
@@ -162,6 +163,13 @@ class NTWidgetRegistry {
       widget: VoltageView.new,
       fromJson: VoltageViewModel.fromJson,
       minHeight: _normalSize,
+    );
+
+    registerSingleTopic(
+      name: AudioSource.widgetType,
+      model: AudioSourceModel.new,
+      widget: AudioSource.new,
+      fromJson: AudioSourceModel.fromJson,
     );
 
     registerMultiTopic(
