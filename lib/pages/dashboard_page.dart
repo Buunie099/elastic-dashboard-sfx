@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:elastic_dashboard/widgets/nt_widgets/single_topic/video_source.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -114,6 +115,8 @@ abstract class DashboardPageViewModel extends ChangeNotifier {
   int currentTabIndex = 0;
 
   bool addWidgetDialogVisible = false;
+
+  bool videoFeedVisible = false;
 
   DashboardPageStateMixin? _state;
   DashboardPageStateMixin? get state => _state;
@@ -365,6 +368,12 @@ abstract class DashboardPageViewModel extends ChangeNotifier {
   void displayAddWidgetDialog() {
     logger.info('Displaying add widget dialog');
     addWidgetDialogVisible = true;
+    notifyListeners();
+  }
+
+  void toggleVideoFeed() {
+    logger.info('Displaying video feed');
+    videoFeedVisible = !videoFeedVisible;
     notifyListeners();
   }
 
@@ -991,6 +1000,13 @@ class _DashboardPageState extends State<DashboardPage>
               : null,
           child: const Text('Add Widget'),
         ),
+        // Video Feed
+        MenuItemButton(
+          style: menuButtonStyle,
+          leadingIcon: const Icon(Icons.add),
+          onPressed: !layoutLocked ? () => model.toggleVideoFeed() : null,
+          child: const Text('Video Feed'),
+        ),
         if (layoutLocked) ...[
           const VerticalDivider(width: 4),
           // Unlock Layout
@@ -1155,6 +1171,28 @@ class _DashboardPageState extends State<DashboardPage>
                       },
                       onClose: () =>
                           setState(() => model.addWidgetDialogVisible = false),
+                    ),
+                  if (model.videoFeedVisible)
+                    VideoWidget(
+                      preferences: model.preferences,
+                      onNTDragUpdate: (globalPosition, widget) {
+                        model.tabData[model.currentTabIndex].tabGrid
+                            .addDragInWidget(widget, globalPosition);
+                      },
+                      onNTDragEnd: (widget) {
+                        model.tabData[model.currentTabIndex].tabGrid
+                            .placeDragInWidget(widget);
+                      },
+                      onLayoutDragUpdate: (globalPosition, widget) {
+                        model.tabData[model.currentTabIndex].tabGrid
+                            .addDragInWidget(widget, globalPosition);
+                      },
+                      onLayoutDragEnd: (widget) {
+                        model.tabData[model.currentTabIndex].tabGrid
+                            .placeDragInWidget(widget);
+                      },
+                      onClose: () =>
+                          setState(() => model.videoFeedVisible = false),
                     ),
                 ],
               ),
